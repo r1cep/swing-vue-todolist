@@ -13,15 +13,19 @@
         v-model="newItemTitle" />
     </div>
     <div>
-      <button @click="addTodo(newItemTitle)">タスクを追加する</button>
-      <button @click="deleteTodo(newItemTitle)">チェックをつけたタスクを削除する</button>
+      <TodoButton @buttonClick="addTodo(newItemTitle)" :text="'タスクを追加する'"></TodoButton>
+      <TodoButton @buttonClick="deleteTodo(newItemTitle)" :text="'チェックを付けたタスクを削除する'"></TodoButton>
     </div>
   </div>
 </template>
 
 <script>
+import TodoButton from './components/Button'
 export default {
   name: 'App',
+  components: {
+    TodoButton: TodoButton
+  },
   data: () => {
     return {
       items: [
