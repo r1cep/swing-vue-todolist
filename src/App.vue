@@ -1,28 +1,59 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class='todo'>
+    <ul>
+      <li v-for="item in items" :key="item.index">
+        <label :class="{ checked: item.isChecked }">
+          <input type="checkbox" v-model="item.isChecked"> {{ item.title }}
+        </label>
+      </li>
+    </ul>
+    <div>
+      <input type="text"
+        placeholder="タスクを入力してみよう"
+        v-model="newItemTitle" />
+    </div>
+    <div>
+      <button @click="addTodo(newItemTitle)">タスクを追加する</button>
+      <button @click="deleteTodo(newItemTitle)">チェックをつけたタスクを削除する</button>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: 'App',
+  data: () => {
+    return {
+      items: [
+        {
+          title: '夕飯の材料を買いに行く',
+          isChecked: false
+        },
+        {
+          title: 'お風呂の掃除をする',
+          isChecked: true
+        },
+        {
+          title: 'ゴミ出しをする',
+          isChecked: false
+        }
+      ],
+      newItemTitle: '',
+    }
+  },
+  methods: {
+    addTodo(newTitle) {
+      let item = {
+        title: newTitle,
+        isChecked: false
+      }
+      this.items.push(item)
+    },
+    deleteTodo() {
+      this.items = this.items.filter(item => {
+        return item.isChecked === false
+      })
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
